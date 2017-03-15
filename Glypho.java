@@ -29,6 +29,8 @@ public class Glypho {
     OutputStream err = System.err;
 
     if (args.length==0) displayUsage();
+    
+    boolean shorthand = false;
 
     for (int i = 0; i < args.length; i++) {
       if (args[i].charAt(0) == '-') {
@@ -52,6 +54,8 @@ public class Glypho {
                     else displayError("Missing error filename");
                     break;
           case 'h': displayUsage();
+                    break;
+          case 'g': shorthand = true;
                     break;
           default:  displayError("Invalid argument: " + args[i]);
 
@@ -78,8 +82,6 @@ public class Glypho {
       } catch (FileNotFoundException e) { displayError("File not found: " + args[args.length-1]); }
       catch (IOException e) { displayError(e.toString());}
 
-
-      boolean shorthand = false;
       if (sourceFile.substring(sourceFile.length() - 4).equals(".gsh")) shorthand = true;
 
       new Glypho(source.toString(), shorthand, in, out, err);
@@ -105,6 +107,7 @@ public class Glypho {
     System.out.println("  -o <filename>   Write output to this file (default is standard output)");
     System.out.println("  -e <filename>   Write error messages to this file (default is standard output)");
     System.out.println("  -h              Display this information");
+    System.out.println("  -g              Interpret code in shorthand form");
     System.out.println("");
     System.out.println("");
     System.out.println("Please report any bugs to rune@krokodille.com");
